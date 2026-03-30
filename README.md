@@ -16,7 +16,7 @@ The script currently expects the Profile name `dual-screencasts`, and you can ma
 
 ## Scene Collection
 
-The script currently expects two named scene Collections - `with-cursor` and `no-cursor`.
+The script currently expects two named scene Collections - `collection-with-cursor` and `collection-no-cursor`.
 
 ## Scene
 
