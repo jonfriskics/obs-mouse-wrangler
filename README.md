@@ -27,3 +27,11 @@ I left the scene name as the default `Scene`.
 The `with-cursor` scene needs a source named `with-cursor` that uses the macOS Screen Capture option with **Show cursor** turned **on** in the Properties dialog.
 
 The `no-cursor` scene needs a source named `no-cursor` that uses the macOS Screen Capture option with **Show cursor** turned **off** in the Properties dialog.
+
+# Running the scripts
+
+1. `python -m venv venv && source venv/bin/activate`
+2. `pip install -r requirements.txt`
+3. First, set up OBS Profiles, Scene Collections, Scenes, and Sources as described above.
+4. `python start_instances.py` to open the two OBS instances.  Once they are open you can check if the right sources have loaded and if the settings look OK.
+5. `python capture.py` to perform the recording.  Recording locations are currently set to `~/Movies/obs1` and `~/Movies/obs2`.
