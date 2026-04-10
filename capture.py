@@ -4,10 +4,7 @@ import os
 import time
 
 output_dir = os.path.expanduser("~/Movies")
-obs1_dir = os.path.join(output_dir, "obs1")
-obs2_dir = os.path.join(output_dir, "obs2")
-os.makedirs(obs1_dir, exist_ok=True)
-os.makedirs(obs2_dir, exist_ok=True)
+os.makedirs(output_dir, exist_ok=True)
 
 obs1 = obs.ReqClient(host="localhost", port=4455, password="pass11")
 obs2 = obs.ReqClient(host="localhost", port=4466, password="pass22")
@@ -16,29 +13,16 @@ obs1.set_current_scene_collection("collection-no-cursor")
 obs2.set_current_scene_collection("collection-with-cursor")
 time.sleep(2)
 
-obs1.set_record_directory(obs1_dir)
-obs2.set_record_directory(obs2_dir)
+obs1.set_record_directory(output_dir)
+obs2.set_record_directory(output_dir)
 
-# TODO printing to debug - remove later
-for name, client in [("obs1", obs1), ("obs2", obs2)]:
+obs1.set_profile_parameter("Output", "FilenameFormatting", "cursor-no-%CCYY-%MM-%DD %hh-%mm-%ss")
+obs2.set_profile_parameter("Output", "FilenameFormatting", "cursor-yes-%CCYY-%MM-%DD %hh-%mm-%ss")
+
+for client in [obs1, obs2]:
     v = client.get_video_settings()
-    print(f"{name}: canvas={v.base_width}x{v.base_height}, output={v.output_width}x{v.output_height}")
-
-def mute_all_audio(client):
-    special = client.get_special_inputs()
-    for attr in ['desktop_1', 'desktop_2', 'mic_1', 'mic_2', 'mic_3', 'mic_4']:
-        name = getattr(special, attr, None)
-        if name:
-            client.set_input_mute(name, muted=True)
-    for inp in client.get_input_list().inputs:
-        try:
-            client.set_input_mute(inp["inputName"], muted=True)
-        except Exception:
-            pass # not an audio input
-
-mute_all_audio(obs1)
-mute_all_audio(obs2)
-print("All audio muted.")
+    client.set_video_settings(v.fps_numerator, v.fps_denominator, 1920, 1080, 1920, 1080)
+    client.set_profile_parameter("SimpleOutput", "RecTracks", "0")
 
 def set_source_visibility(client, scene_name, source_name, enabled):
     items = client.get_scene_item_list(scene_name).scene_items
@@ -52,8 +36,6 @@ scene1 = obs1.get_current_program_scene().scene_name
 scene2 = obs2.get_current_program_scene().scene_name
 
 set_source_visibility(obs1, scene1, "no-cursor", True)
-set_source_visibility(obs1, scene1, "with-cursor", False)
-set_source_visibility(obs2, scene2, "no-cursor", False)
 set_source_visibility(obs2, scene2, "with-cursor", True)
 print("Sources configured: obs1=no-cursor, obs2=with-cursor")
 
