@@ -22,7 +22,6 @@ obs2.set_profile_parameter("Output", "FilenameFormatting", "cursor-yes-%CCYY-%MM
 for client in [obs1, obs2]:
     v = client.get_video_settings()
     client.set_video_settings(v.fps_numerator, v.fps_denominator, 1920, 1080, 1920, 1080)
-    client.set_profile_parameter("SimpleOutput", "RecTracks", "0")
 
 def set_source_visibility(client, scene_name, source_name, enabled):
     items = client.get_scene_item_list(scene_name).scene_items
@@ -49,12 +48,17 @@ print("Both recordings started!")
 print("Press ENTER to stop both recordings...")
 input()
 
-obs1.stop_record()
-obs2.stop_record()
+r1 = obs1.stop_record()
+r2 = obs2.stop_record()
 print("Both stopped.")
 
-# TODO: give both instances a moment to finish writing the file - haven't tested if this fails with really large files.
 time.sleep(10)
 
 import subprocess
+for path in [r1.output_path, r2.output_path]:
+    tmp = path + ".tmp.mov"
+    subprocess.run(["ffmpeg", "-i", path, "-vcodec", "copy", "-an", tmp], check=True)
+    os.replace(tmp, path)
+    print(f"Audio stripped: {path}")
+
 subprocess.run(["pkill", "-f", "OBS"])

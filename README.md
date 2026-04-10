@@ -1,6 +1,6 @@
 # README
 
-I've only tested this on macOS 15.5 with OBS 32.1.0 64-bit.
+I've only tested this on macOS 15.5 with OBS 32.1.0 64-bit.  The `capture.py` cleanup also needs `ffmpeg` installed and available in the path.
 
 You also need to set up Profiles, Scene Collections, Scenes, and Sources in a certain way.
 
