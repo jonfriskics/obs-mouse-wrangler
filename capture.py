@@ -55,10 +55,10 @@ print("Both stopped.")
 time.sleep(10)
 
 import subprocess
-for path in [r1.output_path, r2.output_path]:
-    tmp = path + ".tmp.mov"
-    subprocess.run(["ffmpeg", "-i", path, "-vcodec", "copy", "-an", tmp], check=True)
-    os.replace(tmp, path)
-    print(f"Audio stripped: {path}")
+# for path in [r1.output_path, r2.output_path]:
+#     tmp = path + ".tmp.mov"
+#     subprocess.run(["ffmpeg", "-i", path, "-vcodec", "copy", "-an", tmp], check=True)
+#     os.replace(tmp, path)
+#     print(f"Audio stripped: {path}")
 
 subprocess.run(["pkill", "-f", "OBS"])
