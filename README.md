@@ -28,6 +28,10 @@ The `with-cursor` scene needs a source named `with-cursor` that uses the macOS S
 
 The `no-cursor` scene needs a source named `no-cursor` that uses the macOS Screen Capture option with **Show cursor** turned **off** in the Properties dialog.
 
+## OBS WebSocket Server Settings
+
+You also need to enable OBS' WebSocket Server from the menu OBS -> Tools -> WebSocket Server Settings by checking the **Enable WebSocket server** checkbox.  I believe you only need to do this once before running the scripts in any regular OBS instance.
+
 # Running the scripts
 
 1. `python -m venv venv && source venv/bin/activate`
