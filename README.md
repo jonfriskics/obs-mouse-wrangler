@@ -38,4 +38,4 @@ You also need to enable OBS' WebSocket Server from the menu OBS -> Tools -> WebS
 2. `pip install -r requirements.txt`
 3. First, set up OBS Profiles, Scene Collections, Scenes, and Sources as described above.
 4. `python start_instances.py` to open the two OBS instances.  Once they are open you can check if the right sources have loaded and if the settings look OK.
-5. `python capture.py` to perform the recording.  Recording locations are currently set to `~/Movies/obs1` and `~/Movies/obs2`.
+5. `python capture.py` to perform the recording.  Recording location is currently set to `~/Movies/` and files are prefixed with `cursor-yes-` and `cursor-no-` so it's easier to visually differentiate them when the clips are in an editor.
